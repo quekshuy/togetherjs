@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this file,
  * You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-define(["require", "jquery", "util", "session", "templates", "templating", "linkify", "peers", "windowing", "tinycolor", "elementFinder", "visibilityApi"], function (require, $, util, session, templates, templating, linkify, peers, windowing, tinycolor, elementFinder, visibilityApi) {
+define(["require", "jquery", "util", "session", "templates", "templating", "linkify", "peers", "windowing", "tinycolor", "elementFinder", "visibilityApi", "parkle"], function (require, $, util, session, templates, templating, linkify, peers, windowing, tinycolor, elementFinder, visibilityApi, parkle) {
   var ui = util.Module('ui');
   var assert = util.assert;
   var AssertionError = util.AssertionError;
@@ -388,6 +388,11 @@ define(["require", "jquery", "util", "session", "templates", "templating", "link
 
     $("#togetherjs-share-button").click(function () {
       windowing.toggle("#togetherjs-share");
+      // quek says send request here
+      parkle.requestSession()
+        .fail(function(xhr, txtStatus, errThrown) {
+                console.warn("Error requesting session: (" + xhr.status + ") " + txtStatus);
+          });
     });
 
     $("#togetherjs-profile-button").click(function (event) {
